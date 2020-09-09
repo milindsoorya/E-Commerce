@@ -1,0 +1,443 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="ECommerceModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Admin">
+          <Key>
+            <PropertyRef Name="userid" />
+          </Key>
+          <Property Name="userid" Type="varchar" MaxLength="20" Nullable="false" />
+          <Property Name="password" Type="varchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="CartDetails">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Productid" Type="int" />
+          <Property Name="cid" Type="int" />
+          <Property Name="quantity" Type="int" />
+          <Property Name="Price" Type="money" />
+          <Property Name="discount" Type="int" />
+        </EntityType>
+        <EntityType Name="CartTransaction">
+          <Key>
+            <PropertyRef Name="cid" />
+          </Key>
+          <Property Name="cid" Type="int" Nullable="false" />
+          <Property Name="userid" Type="varchar" MaxLength="20" />
+          <Property Name="status" Type="varchar" MaxLength="30" />
+        </EntityType>
+        <EntityType Name="Feedback">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="userid" Type="varchar" MaxLength="20" />
+          <Property Name="productname" Type="varchar" MaxLength="30" />
+          <Property Name="Feedback" Type="varchar" MaxLength="300" />
+          <Property Name="FBDate" Type="datetime" />
+        </EntityType>
+        <EntityType Name="ProdTransaction">
+          <Key>
+            <PropertyRef Name="Transactionid" />
+          </Key>
+          <Property Name="Transactionid" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="cid" Type="int" />
+          <Property Name="TransactionDate" Type="datetime" />
+        </EntityType>
+        <EntityType Name="Product">
+          <Key>
+            <PropertyRef Name="productid" />
+          </Key>
+          <Property Name="productid" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="productName" Type="varchar" MaxLength="20" Nullable="false" />
+          <Property Name="CategoryName" Type="varchar" MaxLength="20" />
+          <Property Name="Availableunits" Type="int" />
+          <Property Name="price" Type="money" />
+          <Property Name="discount" Type="int" />
+        </EntityType>
+        <EntityType Name="tbluser">
+          <Key>
+            <PropertyRef Name="userid" />
+          </Key>
+          <Property Name="userid" Type="varchar" MaxLength="20" Nullable="false" />
+          <Property Name="firstname" Type="varchar" MaxLength="30" />
+          <Property Name="lastname" Type="varchar" MaxLength="30" />
+          <Property Name="password" Type="varchar" MaxLength="30" />
+          <Property Name="Address" Type="varchar" MaxLength="200" />
+          <Property Name="ContactNo" Type="int" />
+          <Property Name="Email" Type="varchar" MaxLength="50" />
+          <Property Name="city" Type="varchar" MaxLength="20" />
+          <Property Name="country" Type="varchar" MaxLength="20" />
+        </EntityType>
+        <Association Name="FK__CartDetai__Produ__1BFD2C07">
+          <End Role="Product" Type="Self.Product" Multiplicity="0..1" />
+          <End Role="CartDetails" Type="Self.CartDetails" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Product">
+              <PropertyRef Name="productid" />
+            </Principal>
+            <Dependent Role="CartDetails">
+              <PropertyRef Name="Productid" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__CartDetails__cid__1CF15040">
+          <End Role="CartTransaction" Type="Self.CartTransaction" Multiplicity="0..1" />
+          <End Role="CartDetails" Type="Self.CartDetails" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CartTransaction">
+              <PropertyRef Name="cid" />
+            </Principal>
+            <Dependent Role="CartDetails">
+              <PropertyRef Name="cid" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__CartTrans__useri__1920BF5C">
+          <End Role="tbluser" Type="Self.tbluser" Multiplicity="0..1" />
+          <End Role="CartTransaction" Type="Self.CartTransaction" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tbluser">
+              <PropertyRef Name="userid" />
+            </Principal>
+            <Dependent Role="CartTransaction">
+              <PropertyRef Name="userid" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Feedback__userid__164452B1">
+          <End Role="tbluser" Type="Self.tbluser" Multiplicity="0..1" />
+          <End Role="Feedback" Type="Self.Feedback" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tbluser">
+              <PropertyRef Name="userid" />
+            </Principal>
+            <Dependent Role="Feedback">
+              <PropertyRef Name="userid" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__ProdTransac__cid__1FCDBCEB">
+          <End Role="CartTransaction" Type="Self.CartTransaction" Multiplicity="0..1" />
+          <End Role="ProdTransaction" Type="Self.ProdTransaction" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CartTransaction">
+              <PropertyRef Name="cid" />
+            </Principal>
+            <Dependent Role="ProdTransaction">
+              <PropertyRef Name="cid" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="ECommerceModelStoreContainer">
+          <EntitySet Name="Admin" EntityType="Self.Admin" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="CartDetails" EntityType="Self.CartDetails" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="CartTransaction" EntityType="Self.CartTransaction" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Feedback" EntityType="Self.Feedback" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ProdTransaction" EntityType="Self.ProdTransaction" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Product" EntityType="Self.Product" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tbluser" EntityType="Self.tbluser" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK__CartDetai__Produ__1BFD2C07" Association="Self.FK__CartDetai__Produ__1BFD2C07">
+            <End Role="Product" EntitySet="Product" />
+            <End Role="CartDetails" EntitySet="CartDetails" />
+          </AssociationSet>
+          <AssociationSet Name="FK__CartDetails__cid__1CF15040" Association="Self.FK__CartDetails__cid__1CF15040">
+            <End Role="CartTransaction" EntitySet="CartTransaction" />
+            <End Role="CartDetails" EntitySet="CartDetails" />
+          </AssociationSet>
+          <AssociationSet Name="FK__CartTrans__useri__1920BF5C" Association="Self.FK__CartTrans__useri__1920BF5C">
+            <End Role="tbluser" EntitySet="tbluser" />
+            <End Role="CartTransaction" EntitySet="CartTransaction" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Feedback__userid__164452B1" Association="Self.FK__Feedback__userid__164452B1">
+            <End Role="tbluser" EntitySet="tbluser" />
+            <End Role="Feedback" EntitySet="Feedback" />
+          </AssociationSet>
+          <AssociationSet Name="FK__ProdTransac__cid__1FCDBCEB" Association="Self.FK__ProdTransac__cid__1FCDBCEB">
+            <End Role="CartTransaction" EntitySet="CartTransaction" />
+            <End Role="ProdTransaction" EntitySet="ProdTransaction" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="ECommerceModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="Admin">
+          <Key>
+            <PropertyRef Name="userid" />
+          </Key>
+          <Property Name="userid" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="password" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <EntityType Name="CartDetail">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Productid" Type="Int32" />
+          <Property Name="cid" Type="Int32" />
+          <Property Name="quantity" Type="Int32" />
+          <Property Name="Price" Type="Decimal" Precision="19" Scale="4" />
+          <Property Name="discount" Type="Int32" />
+          <NavigationProperty Name="Product" Relationship="Self.FK__CartDetai__Produ__1BFD2C07" FromRole="CartDetails" ToRole="Product" />
+          <NavigationProperty Name="CartTransaction" Relationship="Self.FK__CartDetails__cid__1CF15040" FromRole="CartDetails" ToRole="CartTransaction" />
+        </EntityType>
+        <EntityType Name="CartTransaction">
+          <Key>
+            <PropertyRef Name="cid" />
+          </Key>
+          <Property Name="cid" Type="Int32" Nullable="false" />
+          <Property Name="userid" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="status" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="CartDetails" Relationship="Self.FK__CartDetails__cid__1CF15040" FromRole="CartTransaction" ToRole="CartDetails" />
+          <NavigationProperty Name="tbluser" Relationship="Self.FK__CartTrans__useri__1920BF5C" FromRole="CartTransaction" ToRole="tbluser" />
+          <NavigationProperty Name="ProdTransactions" Relationship="Self.FK__ProdTransac__cid__1FCDBCEB" FromRole="CartTransaction" ToRole="ProdTransaction" />
+        </EntityType>
+        <EntityType Name="Feedback">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="userid" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="productname" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+          <Property Name="Feedback1" Type="String" MaxLength="300" FixedLength="false" Unicode="false" />
+          <Property Name="FBDate" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="tbluser" Relationship="Self.FK__Feedback__userid__164452B1" FromRole="Feedback" ToRole="tbluser" />
+        </EntityType>
+        <EntityType Name="ProdTransaction">
+          <Key>
+            <PropertyRef Name="Transactionid" />
+          </Key>
+          <Property Name="Transactionid" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="cid" Type="Int32" />
+          <Property Name="TransactionDate" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="CartTransaction" Relationship="Self.FK__ProdTransac__cid__1FCDBCEB" FromRole="ProdTransaction" ToRole="CartTransaction" />
+        </EntityType>
+        <EntityType Name="Product">
+          <Key>
+            <PropertyRef Name="productid" />
+          </Key>
+          <Property Name="productid" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="productName" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="CategoryName" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="Availableunits" Type="Int32" />
+          <Property Name="price" Type="Decimal" Precision="19" Scale="4" />
+          <Property Name="discount" Type="Int32" />
+          <NavigationProperty Name="CartDetails" Relationship="Self.FK__CartDetai__Produ__1BFD2C07" FromRole="Product" ToRole="CartDetails" />
+        </EntityType>
+        <EntityType Name="tbluser">
+          <Key>
+            <PropertyRef Name="userid" />
+          </Key>
+          <Property Name="userid" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="firstname" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+          <Property Name="lastname" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+          <Property Name="password" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+          <Property Name="Address" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="ContactNo" Type="Int32" />
+          <Property Name="Email" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="city" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="country" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="CartTransactions" Relationship="Self.FK__CartTrans__useri__1920BF5C" FromRole="tbluser" ToRole="CartTransaction" />
+          <NavigationProperty Name="Feedbacks" Relationship="Self.FK__Feedback__userid__164452B1" FromRole="tbluser" ToRole="Feedback" />
+        </EntityType>
+        <Association Name="FK__CartDetai__Produ__1BFD2C07">
+          <End Role="Product" Type="Self.Product" Multiplicity="0..1" />
+          <End Role="CartDetails" Type="Self.CartDetail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Product">
+              <PropertyRef Name="productid" />
+            </Principal>
+            <Dependent Role="CartDetails">
+              <PropertyRef Name="Productid" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__CartDetails__cid__1CF15040">
+          <End Role="CartTransaction" Type="Self.CartTransaction" Multiplicity="0..1" />
+          <End Role="CartDetails" Type="Self.CartDetail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CartTransaction">
+              <PropertyRef Name="cid" />
+            </Principal>
+            <Dependent Role="CartDetails">
+              <PropertyRef Name="cid" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__CartTrans__useri__1920BF5C">
+          <End Role="tbluser" Type="Self.tbluser" Multiplicity="0..1" />
+          <End Role="CartTransaction" Type="Self.CartTransaction" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tbluser">
+              <PropertyRef Name="userid" />
+            </Principal>
+            <Dependent Role="CartTransaction">
+              <PropertyRef Name="userid" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__ProdTransac__cid__1FCDBCEB">
+          <End Role="CartTransaction" Type="Self.CartTransaction" Multiplicity="0..1" />
+          <End Role="ProdTransaction" Type="Self.ProdTransaction" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CartTransaction">
+              <PropertyRef Name="cid" />
+            </Principal>
+            <Dependent Role="ProdTransaction">
+              <PropertyRef Name="cid" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Feedback__userid__164452B1">
+          <End Role="tbluser" Type="Self.tbluser" Multiplicity="0..1" />
+          <End Role="Feedback" Type="Self.Feedback" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tbluser">
+              <PropertyRef Name="userid" />
+            </Principal>
+            <Dependent Role="Feedback">
+              <PropertyRef Name="userid" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="ECommerceEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Admins" EntityType="Self.Admin" />
+          <EntitySet Name="CartDetails" EntityType="Self.CartDetail" />
+          <EntitySet Name="CartTransactions" EntityType="Self.CartTransaction" />
+          <EntitySet Name="Feedbacks" EntityType="Self.Feedback" />
+          <EntitySet Name="ProdTransactions" EntityType="Self.ProdTransaction" />
+          <EntitySet Name="Products" EntityType="Self.Product" />
+          <EntitySet Name="tblusers" EntityType="Self.tbluser" />
+          <AssociationSet Name="FK__CartDetai__Produ__1BFD2C07" Association="Self.FK__CartDetai__Produ__1BFD2C07">
+            <End Role="Product" EntitySet="Products" />
+            <End Role="CartDetails" EntitySet="CartDetails" />
+          </AssociationSet>
+          <AssociationSet Name="FK__CartDetails__cid__1CF15040" Association="Self.FK__CartDetails__cid__1CF15040">
+            <End Role="CartTransaction" EntitySet="CartTransactions" />
+            <End Role="CartDetails" EntitySet="CartDetails" />
+          </AssociationSet>
+          <AssociationSet Name="FK__CartTrans__useri__1920BF5C" Association="Self.FK__CartTrans__useri__1920BF5C">
+            <End Role="tbluser" EntitySet="tblusers" />
+            <End Role="CartTransaction" EntitySet="CartTransactions" />
+          </AssociationSet>
+          <AssociationSet Name="FK__ProdTransac__cid__1FCDBCEB" Association="Self.FK__ProdTransac__cid__1FCDBCEB">
+            <End Role="CartTransaction" EntitySet="CartTransactions" />
+            <End Role="ProdTransaction" EntitySet="ProdTransactions" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Feedback__userid__164452B1" Association="Self.FK__Feedback__userid__164452B1">
+            <End Role="tbluser" EntitySet="tblusers" />
+            <End Role="Feedback" EntitySet="Feedbacks" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="ECommerceModelStoreContainer" CdmEntityContainer="ECommerceEntities">
+          <EntitySetMapping Name="Admins">
+            <EntityTypeMapping TypeName="ECommerceModel.Admin">
+              <MappingFragment StoreEntitySet="Admin">
+                <ScalarProperty Name="userid" ColumnName="userid" />
+                <ScalarProperty Name="password" ColumnName="password" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="CartDetails">
+            <EntityTypeMapping TypeName="ECommerceModel.CartDetail">
+              <MappingFragment StoreEntitySet="CartDetails">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="Productid" ColumnName="Productid" />
+                <ScalarProperty Name="cid" ColumnName="cid" />
+                <ScalarProperty Name="quantity" ColumnName="quantity" />
+                <ScalarProperty Name="Price" ColumnName="Price" />
+                <ScalarProperty Name="discount" ColumnName="discount" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="CartTransactions">
+            <EntityTypeMapping TypeName="ECommerceModel.CartTransaction">
+              <MappingFragment StoreEntitySet="CartTransaction">
+                <ScalarProperty Name="cid" ColumnName="cid" />
+                <ScalarProperty Name="userid" ColumnName="userid" />
+                <ScalarProperty Name="status" ColumnName="status" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Feedbacks">
+            <EntityTypeMapping TypeName="ECommerceModel.Feedback">
+              <MappingFragment StoreEntitySet="Feedback">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="userid" ColumnName="userid" />
+                <ScalarProperty Name="productname" ColumnName="productname" />
+                <ScalarProperty Name="Feedback1" ColumnName="Feedback" />
+                <ScalarProperty Name="FBDate" ColumnName="FBDate" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ProdTransactions">
+            <EntityTypeMapping TypeName="ECommerceModel.ProdTransaction">
+              <MappingFragment StoreEntitySet="ProdTransaction">
+                <ScalarProperty Name="Transactionid" ColumnName="Transactionid" />
+                <ScalarProperty Name="cid" ColumnName="cid" />
+                <ScalarProperty Name="TransactionDate" ColumnName="TransactionDate" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Products">
+            <EntityTypeMapping TypeName="ECommerceModel.Product">
+              <MappingFragment StoreEntitySet="Product">
+                <ScalarProperty Name="productid" ColumnName="productid" />
+                <ScalarProperty Name="productName" ColumnName="productName" />
+                <ScalarProperty Name="CategoryName" ColumnName="CategoryName" />
+                <ScalarProperty Name="Availableunits" ColumnName="Availableunits" />
+                <ScalarProperty Name="price" ColumnName="price" />
+                <ScalarProperty Name="discount" ColumnName="discount" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tblusers">
+            <EntityTypeMapping TypeName="ECommerceModel.tbluser">
+              <MappingFragment StoreEntitySet="tbluser">
+                <ScalarProperty Name="userid" ColumnName="userid" />
+                <ScalarProperty Name="firstname" ColumnName="firstname" />
+                <ScalarProperty Name="lastname" ColumnName="lastname" />
+                <ScalarProperty Name="password" ColumnName="password" />
+                <ScalarProperty Name="Address" ColumnName="Address" />
+                <ScalarProperty Name="ContactNo" ColumnName="ContactNo" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="city" ColumnName="city" />
+                <ScalarProperty Name="country" ColumnName="country" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>
