@@ -1,0 +1,57 @@
+﻿@model IEnumerable<ECommerceSite.Product>
+
+@{
+    ViewBag.Title = "Product Inventory";
+}
+
+<h2>Product Inventory</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.productName)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.CategoryName)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Availableunits)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.price)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.discount)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.productName)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.CategoryName)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Availableunits)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.price)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.discount)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { id=item.productid }) |
+            @Html.ActionLink("Details", "Details", new { id=item.productid }) |
+            @Html.ActionLink("Delete", "Delete", new { id=item.productid })
+        </td>
+    </tr>
+}
+
+</table>

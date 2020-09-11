@@ -25,6 +25,7 @@ namespace ECommerceSite.Models
         [DisplayName("Password")]
         [DataType(DataType.Password)]
         public string password { get; set; }
+        public string ConfirmPassword { get; set; }
         public string Address { get; set; }
         public Nullable<int> ContactNo { get; set; }
         public string Email { get; set; }

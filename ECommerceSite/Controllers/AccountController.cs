@@ -15,6 +15,7 @@ namespace ECommerceSite.Controllers
             tbluser user = new tbluser();
             return View(user);
         }
+
         [HttpPost]
         public ActionResult AddorEdit(tbluser user)
         {

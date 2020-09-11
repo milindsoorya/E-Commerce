@@ -1,8 +1,8 @@
 ﻿
 @{
-    Layout = null;
+    ViewBag.Title = "Home";
     //should move this into _layout page
-    if(Session["userid"] == null)
+    if (Session["userid"] == null)
     {
         Response.Redirect("~/Login/Index");
     }
@@ -18,8 +18,8 @@
 <body> 
     <div> 
         <h1>Welcome to ECommerce</h1>
-        <h3>@Session["userid"].ToString()</h3>
-        <a href="@Url.Action("Logout","Login")">Logout</a>
+        <h3>Products</h3>
+      
     </div>
 </body>
 </html>

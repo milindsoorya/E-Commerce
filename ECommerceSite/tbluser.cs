@@ -11,9 +11,7 @@ namespace ECommerceSite
 {
     using System;
     using System.Collections.Generic;
-    using System.ComponentModel;
-    using System.ComponentModel.DataAnnotations;
-
+    
     public partial class tbluser
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
@@ -23,38 +21,17 @@ namespace ECommerceSite
             this.Feedbacks = new HashSet<Feedback>();
         }
     
-        [Required(ErrorMessage ="This Field is Required")]
-        [DisplayName("UserId")]
         public string userid { get; set; }
-        [Required(ErrorMessage = "This Field is Required")]
-        [DisplayName("First Name")]
         public string firstname { get; set; }
-        [Required(ErrorMessage = "This Field is Required")]
-        [DisplayName("Last Name")]
         public string lastname { get; set; }
-        [Required(ErrorMessage = "This Field is Required")]
-        [DataType(DataType.Password)]
-        [DisplayName("Password")]
         public string password { get; set; }
-        [Required(ErrorMessage = "This Field is Required")]
-        [DataType(DataType.Password)]
-        [DisplayName("Confirm Password")]
-        [Compare("password", ErrorMessage ="Passwords do not match")]
-        public string ConfirmPassword { get; set; }
-        [Required(ErrorMessage = "This Field is Required")]
         public string Address { get; set; }
-        [Required(ErrorMessage = "This Field is Required")]
-        [DisplayName("Contact No")]
         public Nullable<int> ContactNo { get; set; }
-        [Required(ErrorMessage = "This Field is Required")]
         public string Email { get; set; }
-        [Required(ErrorMessage = "This Field is Required")]
-        [DisplayName("City")]
         public string city { get; set; }
-        [Required(ErrorMessage = "This Field is Required")]
-        [DisplayName("Country")]
         public string country { get; set; }
-    
+        public string ConfirmPassword { get; set; }
+
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<CartTransaction> CartTransactions { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]

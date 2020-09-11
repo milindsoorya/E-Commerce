@@ -1,8 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 using System.Web;
 using System.Web.Mvc;
+using ECommerceSite;
+
 
 namespace ECommerceSite.Controllers 
 {
@@ -13,6 +16,7 @@ namespace ECommerceSite.Controllers
         {
             return View();
         }
+
         [HttpPost]
         public ActionResult Authorize(ECommerceSite.Models.tbluser userModel)
         {
@@ -32,6 +36,7 @@ namespace ECommerceSite.Controllers
             }
               
         }
+
         public ActionResult Logout()
         {
             string userid = (string)Session["userid"];

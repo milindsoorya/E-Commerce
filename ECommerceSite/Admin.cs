@@ -16,5 +16,6 @@ namespace ECommerceSite
     {
         public string userid { get; set; }
         public string password { get; set; }
+        public string LoginErrorMessage { get; set; }
     }
 }
