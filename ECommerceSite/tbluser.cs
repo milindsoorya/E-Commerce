@@ -30,9 +30,8 @@ namespace ECommerceSite
         public string Email { get; set; }
         public string city { get; set; }
         public string country { get; set; }
-        public string LoginErrorMessage { get; set; }
-        public string ConfirmMessage { get; set; }
-
+        public String ConfirmPassword { get; set; }
+        public String LoginErrorMessage { get; set; }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<CartDetail> CartDetails { get; set; }
