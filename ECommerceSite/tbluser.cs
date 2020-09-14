@@ -11,41 +11,28 @@ namespace ECommerceSite
 {
     using System;
     using System.Collections.Generic;
-    using System.ComponentModel;
-    using System.ComponentModel.DataAnnotations;
-
+    
     public partial class tbluser
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public tbluser()
         {
-            this.CartTransactions = new HashSet<CartTransaction>();
+            this.CartDetails = new HashSet<CartDetail>();
             this.Feedbacks = new HashSet<Feedback>();
         }
-
-        [DisplayName("User Id")]
-        [Required(ErrorMessage = "This Field is Required")]
+    
         public string userid { get; set; }
         public string firstname { get; set; }
         public string lastname { get; set; }
-        [Required(ErrorMessage = "This Field is Required")]
-        [DisplayName("Password")]
-        [DataType(DataType.Password)]
         public string password { get; set; }
-        [Required(ErrorMessage = "This Field is Required")]
-        [DisplayName("Confirm Password")]
-        [DataType(DataType.Password)]
-        [Compare("password", ErrorMessage ="Passwords do not Match")]
-        public string ConfirmPassword { get; set; }
         public string Address { get; set; }
         public Nullable<int> ContactNo { get; set; }
         public string Email { get; set; }
         public string city { get; set; }
         public string country { get; set; }
-
-
+    
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<CartTransaction> CartTransactions { get; set; }
+        public virtual ICollection<CartDetail> CartDetails { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Feedback> Feedbacks { get; set; }
     }

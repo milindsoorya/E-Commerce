@@ -19,7 +19,7 @@ namespace ECommerceSite.Controllers
         [HttpPost]
         public ActionResult AddorEdit(tbluser user)
         {
-            using (ECommerceEntities db = new ECommerceEntities())
+            using (ECommerceEntities2 db = new ECommerceEntities2())
             {
                 if(db.tblusers.Any(x => x.userid == user.userid))
                 {

@@ -2,6 +2,10 @@
 
 @{
     ViewBag.Title = "Product Inventory";
+    if (Session["userid"] == null)
+    {
+        Response.Redirect("~/Login/Index");
+    }
 }
 
 <h2>Product Inventory</h2>
@@ -26,7 +30,9 @@
         <th>
             @Html.DisplayNameFor(model => model.discount)
         </th>
-        <th></th>
+        <th>
+
+        </th>
     </tr>
 
 @foreach (var item in Model) {

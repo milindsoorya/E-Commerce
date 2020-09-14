@@ -10,107 +10,122 @@ using ECommerceSite;
 
 namespace ECommerceSite.Controllers
 {
-    public class ProductsController : Controller
+    public class TransactionBillsController : Controller
     {
         private ECommerceEntities2 db = new ECommerceEntities2();
 
-        // GET: Products
+        // GET: TransactionBills
         public ActionResult Index()
         {
-            return View(db.Products.ToList());
+            return View(db.TransactionBills.ToList());
         }
 
-        // GET: Products/Details/5
+        // GET: TransactionBills/Details/5
         public ActionResult Details(int? id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Product product = db.Products.Find(id);
-            if (product == null)
+            TransactionBill transactionBill = db.TransactionBills.Find(id);
+            if (transactionBill == null)
             {
                 return HttpNotFound();
             }
-            return View(product);
+            return View(transactionBill);
         }
 
-        // GET: Products/Create
+        // GET: TransactionBills/Create
         public ActionResult Create()
         {
             return View();
         }
 
-        // POST: Products/Create
+        // POST: TransactionBills/Create
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "productid,productName,CategoryName,Availableunits,price,discount")] Product product)
+        public ActionResult Create(int id = 0)
         {
-            if (ModelState.IsValid)
+            TransactionBill bill = new TransactionBill();
+
+            if (!db.CartDetails.Any())
             {
-                db.Products.Add(product);
+                ViewBag.Error = "Cart is Empty";
+               
+            }
+            else
+            {
+                string UserId = Session["userid"].ToString();
+                bill.userid = UserId;
+                var cart = db.CartDetails.Where(pro => pro.userid.Equals(UserId)).FirstOrDefault();
+                bill.amount = db.CartDetails.Select(t => t.Price ?? 0).Sum();
+                bill.TransactionDate = DateTime.Now;
+                db.TransactionBills.Add(bill);
+                db.CartDetails.Remove(cart);
                 db.SaveChanges();
+                ViewBag.Success = "Paid";
                 return RedirectToAction("Index");
             }
 
-            return View(product);
+            //ViewBag.cid = new SelectList(db.CartDetails, "id", "userid", transactionBill.cid);
+            return View(bill);
         }
 
-        // GET: Products/Edit/5
+        // GET: TransactionBills/Edit/5
         public ActionResult Edit(int? id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Product product = db.Products.Find(id);
-            if (product == null)
+            TransactionBill transactionBill = db.TransactionBills.Find(id);
+            if (transactionBill == null)
             {
                 return HttpNotFound();
             }
-            return View(product);
+            return View(transactionBill);
         }
 
-        // POST: Products/Edit/5
+        // POST: TransactionBills/Edit/5
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "productid,productName,CategoryName,Availableunits,price,discount")] Product product)
+        public ActionResult Edit([Bind(Include = "Transactionid,userid,amount,TransactionDate")] TransactionBill transactionBill)
         {
             if (ModelState.IsValid)
             {
-                db.Entry(product).State = EntityState.Modified;
+                db.Entry(transactionBill).State = EntityState.Modified;
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
-            return View(product);
+            return View(transactionBill);
         }
 
-        // GET: Products/Delete/5
+        // GET: TransactionBills/Delete/5
         public ActionResult Delete(int? id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Product product = db.Products.Find(id);
-            if (product == null)
+            TransactionBill transactionBill = db.TransactionBills.Find(id);
+            if (transactionBill == null)
             {
                 return HttpNotFound();
             }
-            return View(product);
+            return View(transactionBill);
         }
 
-        // POST: Products/Delete/5
+        // POST: TransactionBills/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
         {
-            Product product = db.Products.Find(id);
-            db.Products.Remove(product);
+            TransactionBill transactionBill = db.TransactionBills.Find(id);
+            db.TransactionBills.Remove(transactionBill);
             db.SaveChanges();
             return RedirectToAction("Index");
         }

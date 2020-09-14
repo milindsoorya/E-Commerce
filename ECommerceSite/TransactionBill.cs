@@ -12,12 +12,11 @@ namespace ECommerceSite
     using System;
     using System.Collections.Generic;
     
-    public partial class ProdTransaction
+    public partial class TransactionBill
     {
         public int Transactionid { get; set; }
-        public Nullable<int> cid { get; set; }
+        public string userid { get; set; }
+        public Nullable<decimal> amount { get; set; }
         public Nullable<System.DateTime> TransactionDate { get; set; }
-    
-        public virtual CartTransaction CartTransaction { get; set; }
     }
 }

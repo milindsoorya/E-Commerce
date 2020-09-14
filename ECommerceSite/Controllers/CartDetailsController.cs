@@ -12,16 +12,21 @@ namespace ECommerceSite.Controllers
 {
     public class CartDetailsController : Controller
     {
-        private ECommerceEntities db = new ECommerceEntities();
-
-
-
-
+        private ECommerceEntities2 db = new ECommerceEntities2();
 
         // GET: CartDetails
         public ActionResult Index()
         {
-            var cartDetails = db.CartDetails.Include(c => c.Product).Include(c => c.CartTransaction);
+            var cartDetails = db.CartDetails.Include(c => c.Product).Include(c => c.tbluser);
+            string UserId = Session["userid"].ToString();
+            if (db.CartDetails.Where(car =>  car.userid.Equals(UserId)).FirstOrDefault() != null)
+            {
+                ViewBag.CartMessage = "Cart not Empty";
+            }
+            else
+            {
+                ViewBag.CartEmptyMessage = "Cart is Empty";
+            }
             return View(cartDetails.ToList());
         }
 
@@ -44,7 +49,7 @@ namespace ECommerceSite.Controllers
         public ActionResult Create()
         {
             ViewBag.Productid = new SelectList(db.Products, "productid", "productName");
-            ViewBag.cid = new SelectList(db.CartTransactions, "cid", "userid");
+            ViewBag.userid = new SelectList(db.tblusers, "userid", "firstname");
             return View();
         }
 
@@ -53,7 +58,7 @@ namespace ECommerceSite.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "id,Productid,cid,quantity,Price,discount")] CartDetail cartDetail)
+        public ActionResult Create([Bind(Include = "id,Productid,userid,quantity,Price")] CartDetail cartDetail)
         {
             if (ModelState.IsValid)
             {
@@ -63,7 +68,7 @@ namespace ECommerceSite.Controllers
             }
 
             ViewBag.Productid = new SelectList(db.Products, "productid", "productName", cartDetail.Productid);
-            ViewBag.cid = new SelectList(db.CartTransactions, "cid", "userid", cartDetail.cid);
+            ViewBag.userid = new SelectList(db.tblusers, "userid", "firstname", cartDetail.userid);
             return View(cartDetail);
         }
 
@@ -80,7 +85,7 @@ namespace ECommerceSite.Controllers
                 return HttpNotFound();
             }
             ViewBag.Productid = new SelectList(db.Products, "productid", "productName", cartDetail.Productid);
-            ViewBag.cid = new SelectList(db.CartTransactions, "cid", "userid", cartDetail.cid);
+            ViewBag.userid = new SelectList(db.tblusers, "userid", "firstname", cartDetail.userid);
             return View(cartDetail);
         }
 
@@ -89,7 +94,7 @@ namespace ECommerceSite.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "id,Productid,cid,quantity,Price,discount")] CartDetail cartDetail)
+        public ActionResult Edit([Bind(Include = "id,Productid,userid,quantity,Price")] CartDetail cartDetail)
         {
             if (ModelState.IsValid)
             {
@@ -98,7 +103,7 @@ namespace ECommerceSite.Controllers
                 return RedirectToAction("Index");
             }
             ViewBag.Productid = new SelectList(db.Products, "productid", "productName", cartDetail.Productid);
-            ViewBag.cid = new SelectList(db.CartTransactions, "cid", "userid", cartDetail.cid);
+            ViewBag.userid = new SelectList(db.tblusers, "userid", "firstname", cartDetail.userid);
             return View(cartDetail);
         }
 
@@ -120,10 +125,13 @@ namespace ECommerceSite.Controllers
         // POST: CartDetails/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
-        public ActionResult DeleteConfirmed(int id)
+        public ActionResult DeleteConfirmed(int id, int productid, int quantity)
         {
+            
             CartDetail cartDetail = db.CartDetails.Find(id);
             db.CartDetails.Remove(cartDetail);
+            Product p1 = db.Products.Find(productid);
+            p1.Availableunits = p1.Availableunits + cartDetail.quantity;
             db.SaveChanges();
             return RedirectToAction("Index");
         }
