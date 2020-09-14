@@ -4,18 +4,15 @@
   <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
-      <Diagram DiagramId="876d3b834d434c039e4f20f03b30d130" Name="Diagram1" ZoomLevel="74">
-        <EntityTypeShape EntityType="ECommerceModel.Admin" Width="1.5" PointX="7.75" PointY="0.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="ECommerceModel.CartDetail" Width="1.5" PointX="5.25" PointY="2.5" IsExpanded="true" />
-        <EntityTypeShape EntityType="ECommerceModel.CartTransaction" Width="1.5" PointX="3" PointY="2.625" IsExpanded="true" />
-        <EntityTypeShape EntityType="ECommerceModel.Feedback" Width="1.5" PointX="3" PointY="5.625" IsExpanded="true" />
-        <EntityTypeShape EntityType="ECommerceModel.ProdTransaction" Width="1.5" PointX="5.25" PointY="6.125" IsExpanded="true" />
-        <EntityTypeShape EntityType="ECommerceModel.Product" Width="1.5" PointX="3" PointY="8.625" IsExpanded="true" />
-        <EntityTypeShape EntityType="ECommerceModel.tbluser" Width="1.5" PointX="0.75" PointY="3.625" IsExpanded="true" />
-        <AssociationConnector Association="ECommerceModel.FK__CartDetai__Produ__1BFD2C07" ManuallyRouted="false" />
-        <AssociationConnector Association="ECommerceModel.FK__CartDetails__cid__1CF15040" ManuallyRouted="false" />
-        <AssociationConnector Association="ECommerceModel.FK__CartTrans__useri__1920BF5C" ManuallyRouted="false" />
-        <AssociationConnector Association="ECommerceModel.FK__ProdTransac__cid__1FCDBCEB" ManuallyRouted="false" />
+      <Diagram DiagramId="43b82c1b0d7a4977963706abf0ac1700" Name="Diagram1">
+        <EntityTypeShape EntityType="ECommerceModel.Admin" Width="1.5" PointX="5.25" PointY="3" IsExpanded="true" />
+        <EntityTypeShape EntityType="ECommerceModel.CartDetail" Width="1.5" PointX="3" PointY="2.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="ECommerceModel.Feedback" Width="1.5" PointX="2.875" PointY="5.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="ECommerceModel.Product" Width="1.5" PointX="0.75" PointY="5.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="ECommerceModel.tbluser" Width="1.5" PointX="0.75" PointY="2.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="ECommerceModel.TransactionBill" Width="1.5" PointX="5" PointY="5.25" IsExpanded="true" />
+        <AssociationConnector Association="ECommerceModel.FK__CartDetai__Produ__239E4DCF" ManuallyRouted="false" />
+        <AssociationConnector Association="ECommerceModel.FK__CartDetai__useri__24927208" ManuallyRouted="false" />
         <AssociationConnector Association="ECommerceModel.FK__Feedback__userid__164452B1" ManuallyRouted="false" />
       </Diagram>
     </edmx:Diagrams>

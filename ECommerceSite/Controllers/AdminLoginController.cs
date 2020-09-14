@@ -17,7 +17,7 @@ namespace ECommerceSite.Controllers
         [HttpPost]
         public ActionResult Index(Admin admin)
         {
-            using (ECommerceEntities db = new ECommerceEntities())
+            using (ECommerceEntities2 db = new ECommerceEntities2())
             {
                 var userDetails = db.Admins.Where(x => x.userid == admin.userid && x.password == admin.password).FirstOrDefault();
                 if (userDetails == null)

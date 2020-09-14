@@ -23,9 +23,9 @@ namespace ECommerceSite
         public int productid { get; set; }
         public string productName { get; set; }
         public string CategoryName { get; set; }
-        public Nullable<int> Availableunits { get; set; }
+        public Nullable<decimal> Availableunits { get; set; }
         public Nullable<decimal> price { get; set; }
-        public Nullable<int> discount { get; set; }
+        public Nullable<decimal> discount { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<CartDetail> CartDetails { get; set; }

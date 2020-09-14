@@ -1,0 +1,78 @@
+﻿@model IEnumerable<ECommerceSite.CartDetail>
+
+
+@{
+    ViewBag.Title = "Cart";
+}
+
+<h2>Cart Items</h2>
+<br />
+
+@using (Html.BeginForm("Create", "TransactionBills", FormMethod.Post))
+{
+    @Html.AntiForgeryToken()
+
+    <table class="table">
+        <tr>
+            
+            <th>
+                @Html.DisplayNameFor(model => model.quantity)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Price)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Product.productName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.tbluser.firstname)
+            </th>
+            <th></th>
+        </tr>
+
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.quantity)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Price)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Product.productName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.tbluser.firstname)
+                </td>
+                <td>
+                    @Html.ActionLink("Details", "Details", new { id = item.id }) |
+                    @Html.ActionLink("Delete", "Delete", new { id = item.id })
+                </td>
+            </tr>
+            
+        }
+       
+
+    </table>
+    <div>
+        <label class="label-warning">@ViewBag.CartEmptyMessage</label>
+
+        <label class="label-warning">@ViewBag.Error</label>
+        <label class="label-success">@ViewBag.Added</label>
+        <a href="@Url.Action("Index", "Home")" class="btn btn-primary">back</a>
+        @{
+            if (ViewBag.CartEmptyMessage != null)
+            {
+                <button type="submit" class="btn btn-success" disabled>Buy Now</button>
+            }
+            else
+            {
+                <button type="submit" class="btn btn-success" >Buy Now</button>
+
+            }
+
+        }
+
+    </div>
+}

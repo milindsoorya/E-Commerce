@@ -1,0 +1,45 @@
+﻿@model IEnumerable<ECommerceSite.TransactionBill>
+
+@{
+    ViewBag.Title = "Transaction Details";
+}
+
+<h2>Transaction Details</h2>
+
+@using (Html.BeginForm("Create", "TransactionBills", FormMethod.Post))
+
+{
+    <table class="table">
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.userid)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.amount)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.TransactionDate)
+            </th>
+            <th></th>
+        </tr>
+
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.userid)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.amount)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.TransactionDate)
+                </td>
+                <td>
+                    <button type="button" class="btn btn-success">Proceed to Pay</button>
+                </td>
+            </tr>
+        }
+
+    </table>
+}

@@ -16,12 +16,11 @@ namespace ECommerceSite
     {
         public int id { get; set; }
         public Nullable<int> Productid { get; set; }
-        public Nullable<int> cid { get; set; }
-        public Nullable<int> quantity { get; set; }
+        public string userid { get; set; }
+        public Nullable<decimal> quantity { get; set; }
         public Nullable<decimal> Price { get; set; }
-        public Nullable<int> discount { get; set; }
     
         public virtual Product Product { get; set; }
-        public virtual CartTransaction CartTransaction { get; set; }
+        public virtual tbluser tbluser { get; set; }
     }
 }

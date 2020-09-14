@@ -18,9 +18,9 @@ namespace ECommerceSite.Controllers
         }
 
         [HttpPost]
-        public ActionResult Authorize(ECommerceSite.Models.tbluser userModel)
+        public ActionResult Authorize(tbluser userModel)
         {
-            using (ECommerceEntities db = new ECommerceEntities())
+            using (ECommerceEntities2 db = new ECommerceEntities2())
             {
                 var userDetails = db.tblusers.Where(x => x.userid == userModel.userid && x.password == userModel.password).FirstOrDefault();
                 if(userDetails == null)

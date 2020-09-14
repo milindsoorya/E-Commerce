@@ -13,10 +13,10 @@ namespace ECommerceSite
     using System.Data.Entity;
     using System.Data.Entity.Infrastructure;
     
-    public partial class ECommerceEntities : DbContext
+    public partial class ECommerceEntities2 : DbContext
     {
-        public ECommerceEntities()
-            : base("name=ECommerceEntities")
+        public ECommerceEntities2()
+            : base("name=ECommerceEntities2")
         {
         }
     
@@ -27,10 +27,9 @@ namespace ECommerceSite
     
         public virtual DbSet<Admin> Admins { get; set; }
         public virtual DbSet<CartDetail> CartDetails { get; set; }
-        public virtual DbSet<CartTransaction> CartTransactions { get; set; }
         public virtual DbSet<Feedback> Feedbacks { get; set; }
-        public virtual DbSet<ProdTransaction> ProdTransactions { get; set; }
         public virtual DbSet<Product> Products { get; set; }
         public virtual DbSet<tbluser> tblusers { get; set; }
+        public virtual DbSet<TransactionBill> TransactionBills { get; set; }
     }
 }
