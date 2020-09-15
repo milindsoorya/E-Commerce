@@ -9,64 +9,71 @@
 {
     @Html.AntiForgeryToken()
 
-<div>
-    <h4>Product</h4>
-    <hr />
-    <dl class="dl-horizontal">
-        @Html.Hidden("ProductId",Model.productid)
-        <dt>
-            @Html.DisplayNameFor(model => model.productName)
-        </dt>
+    <div>
+        <h4>Product</h4>
+        <hr />
+        <dl class="dl-horizontal">
+            @Html.Hidden("ProductId", Model.productid)
+            <dt>
+                @Html.DisplayNameFor(model => model.productName)
+            </dt>
 
-        <dd>
-            @Html.DisplayFor(model => model.productName)
-        </dd>
+            <dd>
+                @Html.DisplayFor(model => model.productName)
+            </dd>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.CategoryName)
-        </dt>
+            <dt>
+                @Html.DisplayNameFor(model => model.CategoryName)
+            </dt>
 
-        <dd>
-            @Html.DisplayFor(model => model.CategoryName)
-        </dd>
+            <dd>
+                @Html.DisplayFor(model => model.CategoryName)
+            </dd>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.Availableunits)
-        </dt>
+            <dt>
+                @Html.DisplayNameFor(model => model.Availableunits)
+            </dt>
 
-        <dd>
-            @Html.DisplayFor(model => model.Availableunits)
-        </dd>
+            <dd>
+                @Html.DisplayFor(model => model.Availableunits)
+            </dd>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.price)
-        </dt>
+            <dt>
+                @Html.DisplayNameFor(model => model.price)
+            </dt>
 
-        <dd>
-            @Html.DisplayFor(model => model.price)
-        </dd>
+            <dd>
+                @Html.DisplayFor(model => model.price)
+            </dd>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.discount)
-        </dt>
+            <dt>
+                @Html.DisplayNameFor(model => model.discount)
+            </dt>
 
-        <dd>
-            @Html.DisplayFor(model => model.discount)
-        </dd>
+            <dd>
+                @Html.DisplayFor(model => model.discount)
+            </dd>
 
-        <dt>
-            <label for="Quantity">Quantity</label>
-        </dt>
-        <dd>
-            @*@{ int quantity = Model.Availableunits ?? default(int);  }
-        @Html.DropDownListFor(m => m.Quantity, Enumerable.Range(1,quantity).Select(i => new SelectListItem { Text = i.ToString(), Value = i.ToString() }))*@
-            <input type="text" class="form-control" id="itemno" name="itemno" placeholder="Enter Quantity in numbers">
-            <label class="label-warning">@ViewBag.Error</label>
-            <label class="label-success">@ViewBag.Added</label>
-        </dd>
-    </dl>
-    @Html.ActionLink("Back", "Index", null, new { @class = "btn btn-light" })
-    <button type="button" class="btn btn-primary">Add Review</button>
-    <button type="submit" class="btn btn-success">Add to Cart</button>
-</div>
+            <dt>
+                <label for="Quantity">Quantity</label>
+            </dt>
+            <dd>
+                @*@{ int quantity = Model.Availableunits ?? default(int);  }
+                    @Html.DropDownListFor(m => m.Quantity, Enumerable.Range(1,quantity).Select(i => new SelectListItem { Text = i.ToString(), Value = i.ToString() }))*@
+                <input type="text" class="form-control" id="itemno" name="itemno" placeholder="Enter Quantity in numbers">
+                <label class="label-warning">@ViewBag.Error</label>
+                <label class="label-success">@ViewBag.Added</label>
+            </dd>
+        </dl>
+        @Html.ActionLink("Back", "Index", null, new { @class = "btn btn-light" })
+
+        <a href="@Url.Action("Create", "Feedbacks", new { productid1 = Model.productid })" class="btn btn-primary">Add Review</a>
+
+        <button type="submit" class="btn btn-success">Add to Cart</button>
+    </div>
 }
+@*@using (Html.BeginForm("Create", "Feedbacks", new { productid1 = Model.productid }, FormMethod.Post))
+{
+    @Html.AntiForgeryToken()
+<button type="submit" class="btn btn-success">Add Review</button>
+}*@

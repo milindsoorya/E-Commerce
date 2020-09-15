@@ -30,7 +30,6 @@ namespace ECommerceSite.Controllers
                     Session["userid"] = admin.userid;
                     return RedirectToAction("Index", "Products");
                 
-
             }
             
         }
